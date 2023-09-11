@@ -15,7 +15,7 @@ export default function Home() {
   const makeRequest = async (query: string) => {
     setLoading(true);
     try {
-      const response = await axios.get(`https://api.deezer.com/search?q=${query}`);
+      const response = await axios.get(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q=${query}`);
       setResults(response.data.data);
       setLoading(false);
     } catch (error) {

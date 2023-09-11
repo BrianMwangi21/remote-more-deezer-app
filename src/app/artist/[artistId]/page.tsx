@@ -16,9 +16,9 @@ export default function ArtistPage({ params }: { params: { artistId: string } })
     const makeArtistRequest = async (query: string) => {
       setLoading(true);
       try {
-        const responseArtist = await axios.get(`https://api.deezer.com/artist/${query}`);
-        const responseTopTracks = await axios.get(`https://api.deezer.com/artist/${query}/top`);
-        const responseAlbums = await axios.get(`https://api.deezer.com/artist/${query}/albums`);
+        const responseArtist = await axios.get(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/artist/${query}`);
+        const responseTopTracks = await axios.get(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/artist/${query}/top`);
+        const responseAlbums = await axios.get(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/artist/${query}/albums`);
         setResultsArtist(responseArtist.data);
         setResultsTopTracks(responseTopTracks.data.data);
         setResultsAlbums(responseAlbums.data.data);
