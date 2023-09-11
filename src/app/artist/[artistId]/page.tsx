@@ -39,10 +39,6 @@ export default function ArtistPage({ params }: { params: { artistId: string } })
     return `${formattedMinutes}:${formattedSeconds}`;
   }
 
-  console.log("artist", artist)
-  console.log("topTracks", topTracks)
-  console.log("albums", albums)
-
   return (
     <main className="bg-white flex min-h-screen flex-col items-center gap-6 p-4">
 
@@ -105,13 +101,19 @@ export default function ArtistPage({ params }: { params: { artistId: string } })
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 md:grid-cols-4 w-full">
                 {albums.map((album, index) => {
                   return (
-                    <a key={index} className="flex flex-col gap-2 justify-start rounded-md border-[0.1px] border-gray-200 md:hover:cursor-pointer md:hover:scale-105 md:transform md:duration-150" href={`/artist/${result.artist.id}`}>
-                      <div className="w-full h-48 bg-red-400">
+                    <a key={index} className="relative flex flex-col gap-2 justify-start rounded-md border-[0.1px] border-gray-200 md:hover:cursor-pointer md:hover:scale-105 md:transform md:duration-150">
+                      <div className="w-full h-72 overflow-hidden">
+                        <Image
+                          fill
+                          src={album.cover_big}
+                          alt={album.title}
+                          className="object-cover"
+                        />
                       </div>
 
-                      <div className="flex flex-col p-4 text-black">
-                        <p className="text-lg font-bold">{album.title}</p>
-                        <p className="text-lg font-bold">{album.release_date}</p>
+                      <div className="flex flex-col p-4 text-black z-10 bg-white absolute w-full bottom-0">
+                        <p className="text-lg font-bold truncate">{album.title}</p>
+                        <p className="text-lg font-bold">{album.release_date.split("-")[0]}</p>
                       </div>
                     </a>
                   )

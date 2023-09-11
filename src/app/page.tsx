@@ -84,15 +84,21 @@ export default function Home() {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 md:grid-cols-4 w-full">
           {results.map((result, index) => {
             return (
-              <a key={index} className="flex flex-col gap-2 justify-start rounded-md border-[0.1px] border-gray-200 md:hover:cursor-pointer md:hover:scale-105 md:transform md:duration-150" href={`/artist/${result.artist.id}`}>
-                <div className="w-full h-48 bg-red-400">
+              <a key={index} className="relative flex flex-col gap-2 justify-start rounded-md border-[0.1px] border-gray-200 md:hover:cursor-pointer md:hover:scale-105 md:transform md:duration-150" href={`/artist/${result.artist.id}`}>
+                <div className="w-full h-80 overflow-hidden">
+                  <Image
+                    fill
+                    src={result.album.cover_big}
+                    alt={result.title}
+                    className="object-cover"
+                  />
                 </div>
 
-                <div className="flex flex-col p-4 text-black">
+                <div className="flex flex-col p-4 text-black z-10 bg-white absolute w-full bottom-0">
                   <p className="text-sm">{formatDuration(result.duration)}</p>
-                  <p className="text-lg font-bold">{result.title}</p>
+                  <p className="text-lg font-bold truncate">{result.title}</p>
                   <p className="text-sm">By: <strong>{result.artist.name}</strong></p>
-                  <p className="text-sm min-h-[40px]">Album: <strong>{result.album.title}</strong></p>
+                  <p className="text-sm min-h-[40px] truncate">Album: <strong>{result.album.title}</strong></p>
                 </div>
               </a>
             )
