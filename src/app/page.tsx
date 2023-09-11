@@ -4,51 +4,11 @@ import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import axios from "axios";
 import { useState } from "react";
 import Image from 'next/image';
-
-interface DeezerTrack {
-  id: number;
-  readable: boolean;
-  title: string;
-  title_short: string;
-  title_version: string;
-  link: string;
-  duration: number;
-  rank: number;
-  explicit_lyrics: boolean;
-  explicit_content_lyrics: number;
-  explicit_content_cover: number;
-  preview: string;
-  md5_image: string;
-  artist: {
-    id: number;
-    name: string;
-    link: string;
-    picture: string;
-    picture_small: string;
-    picture_medium: string;
-    picture_big: string;
-    picture_xl: string;
-    tracklist: string;
-    type: string;
-  };
-  album: {
-    id: number;
-    title: string;
-    cover: string;
-    cover_small: string;
-    cover_medium: string;
-    cover_big: string;
-    cover_xl: string;
-    md5_image: string;
-    tracklist: string;
-    type: string;
-  };
-  type: string;
-}
+import { DeezerSearch } from "@/types";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [results, setResults] = useState<DeezerTrack[]>([]);
+  const [results, setResults] = useState<DeezerSearch[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | any>(null);
 
@@ -67,13 +27,10 @@ export default function Home() {
   const formatDuration = (seconds: number): string => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
-
     const formattedMinutes = minutes.toString().padStart(2, '0');
     const formattedSeconds = remainingSeconds.toString().padStart(2, '0');
-
     return `${formattedMinutes}:${formattedSeconds}`;
   }
-
 
   return (
     <main className="bg-white flex min-h-screen flex-col items-center gap-6 p-4">
@@ -127,21 +84,17 @@ export default function Home() {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 md:grid-cols-4 w-full">
           {results.map((result, index) => {
             return (
-              <div key={index} className="flex flex-col gap-2 justify-start border-[0.1px] border-gray-200 rounded-md md:hover:cursor-pointer md:hover:scale-105 md:transform md:duration-150">
-                <Image
-                  src={result.album.cover_big}
-                  width="100"
-                  height="48"
-                  className="object-cover w-full rounded-t-md"
-                  alt="Picture of the author"
-                />
-
-                <div className="flex flex-col gap-4 px-4 text-black pb-4">
-                  <p className="text-sm">{formatDuration(result.duration)}</p>
-                  <p className="text-xl font-bold">{result.title}</p>
-                  <p className="text-sm">By {result.artist.name}</p>
+              <a key={index} className="flex flex-col gap-2 justify-start rounded-md border-[0.1px] border-gray-200 md:hover:cursor-pointer md:hover:scale-105 md:transform md:duration-150" href={`/artist/${result.artist.id}`}>
+                <div className="w-full h-48 bg-red-400">
                 </div>
-              </div>
+
+                <div className="flex flex-col p-4 text-black">
+                  <p className="text-sm">{formatDuration(result.duration)}</p>
+                  <p className="text-lg font-bold">{result.title}</p>
+                  <p className="text-sm">By: <strong>{result.artist.name}</strong></p>
+                  <p className="text-sm min-h-[40px]">Album: <strong>{result.album.title}</strong></p>
+                </div>
+              </a>
             )
           })}
         </div>
