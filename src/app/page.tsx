@@ -127,7 +127,7 @@ export default function Home() {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 md:grid-cols-4 w-full">
           {results.map((result, index) => {
             return (
-              <div key={index} className="flex flex-col gap-2 justify-start border-[0.1px] border-gray-200 rounded-md hover:cursor-pointer hover:scale-105 transform duration-150">
+              <div key={index} className="flex flex-col gap-2 justify-start border-[0.1px] border-gray-200 rounded-md md:hover:cursor-pointer md:hover:scale-105 md:transform md:duration-150">
                 <Image
                   src={result.album.cover_big}
                   width="100"
